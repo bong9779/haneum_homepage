@@ -44,5 +44,7 @@ let sequelize = new Sequelize(
     db.Users = require('./Users')(sequelize, Sequelize);
     db.ReviewBoards = require('./Reviewboards')(sequelize, Sequelize);
     db.MedicRecords = require('./MedicRecords')(sequelize, Sequelize);
+    db.Purchases = require('./Purchases')(sequelize, Sequelize);
+    db.RecommendBoards = require('./Recommendboards')(sequelize, Sequelize);
     db.secret = '(9*)5$&dfds!3%^0%^@@2$1!#5@2sdf!4'; //hash값
 module.exports = db;

@@ -34,6 +34,15 @@ module.exports = {
           },
     },
     get : { 
+      recommendboard_data : (req, res) => {
+        const body = req.body;
+        console.log(body.id+"!!!!!!바디아이디")
+        model.get.recommendboard_data(body, data => {
+          const result = { data : data }
+          res.send(result);
+          console.log("board_data"+ data[0].writer);
+        })
+      },
       board_data : (req, res) => {
         const body = req.body;
 
@@ -59,6 +68,13 @@ module.exports = {
           res.send(result)
         })
       },     
+      recommendboard_cnt : (req, res) => {
+        const body = req.body;
+        model.get.recommendboard_cnt(body, cnt => {
+          const result = { cnt : cnt }
+          res.send(result)
+        })
+      },
        //게시판 튜플 수 count model에 요청
       board_cnt : (req, res) => {
         const body = req.body;
@@ -93,6 +109,14 @@ module.exports = {
           }
         })
       },
+      recommendboard : (req, res) => {
+        const body = req.body;
+        model.get.recommendboard(body, result => {
+          if(result) {
+            res.send(result);
+          }
+        })
+      },
       //게시판 가져오기 model에 요청
       board : (req, res) => {
         const body = req.body;
@@ -114,6 +138,23 @@ module.exports = {
     },
 
     add : {
+      purchases : (req, res) => {
+        const body = req.body;
+        model.add.purchases(body, result =>{
+          if(result){
+            res.send(true);
+          }
+        })
+      },
+      recommendboard : (req, res) =>{
+        const body = req.body;
+        model.add.recommendboard(body, result =>{
+          if(result){
+            res.send(true);
+          }
+        })
+      },
+
       //게시판 입력 값 추가 model에 요청
       board : (req, res) =>{
         const body = req.body;

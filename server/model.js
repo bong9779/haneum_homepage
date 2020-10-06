@@ -12,6 +12,8 @@ const {
     Users,
     ReviewBoards,
     MedicRecords,
+    Purchases,
+    RecommendBoards,
     Sequelize: { Op }
 } = require('./models');
 sequelize.query('SET NAMES utf8');
@@ -45,6 +47,18 @@ module.exports = {
 
     },
     get : {
+        recommendboard_data : (body, callback) => {
+            RecommendBoards.findAll({
+                where : { board_id : body.id }
+            })
+            .then(data => {
+                callback(data);
+                console.log("board_data"+ data[0].writer);
+            })
+            .catch(err => {
+                throw err;
+            })
+        },
         board_data : (body, callback) => {
             ReviewBoards.findAll({
                 where : { board_id : body.id }
@@ -147,6 +161,24 @@ module.exports = {
                 throw err;
             })
         },
+        recommendboard_cnt : (body, callback) => {
+            let search = "%%";
+
+            if(body.search) {
+                search = '%' + body.search + '%';
+            }
+    
+            RecommendBoards.count({
+                where : {
+                    title : {
+                        [Op.like] : search
+                    }
+                }
+            })
+            .then(result => {
+              callback(result);
+            })
+          },
         reviewboard_cnt : (body, callback) => {
             let search = "%%";
 
@@ -184,6 +216,30 @@ module.exports = {
               callback(result);
             })
           },
+          recommendboard : (body, callback) => {
+            let search = "%%";
+
+            if(body.search) {//만약 search값있으면 search값만 찾기
+                search = '%' + body.search + '%'; 
+            }
+            
+            RecommendBoards.findAll({
+                where : {
+                    title : {
+                        [Op.like] : search
+                    }
+                },
+                    limit : (body.page * body.limit),
+                    offset : (body.page - 1) * body.limit,
+                    order: sequelize.literal('board_id DESC')
+                })
+            .then(data => {
+                callback(data)
+            })
+            .catch(err => {
+                throw err;
+            })
+        },
           reviewboard : (body, callback) => {
             let search = "%%";
 
@@ -249,7 +305,35 @@ module.exports = {
         }
     },
     add : {
-        
+        purchases : (body, callback) =>{
+            Purchases.create({
+                purchase_name: body.purchasename,
+                purchase_phone: body.purchasephone,
+                purchase_address: body.purchaseaddress,
+                purchase_password: body.purchasepassword,
+            })
+            .then(data =>{
+                callback(true)
+            })
+            .catch(err => {
+                throw err;
+            })
+        }, 
+        recommendboard : (body, callback) =>{
+            RecommendBoards.create({
+                title: body.title_recommendboard,
+                writer: body.name_recommendboard,
+                contents: body.contents_txt,
+                writetime: now_date
+            })
+            .then(data =>{
+                callback(true)
+            })
+            .catch(err => {
+                throw err;
+            })
+        },
+
         //게시판 추가
         board : (body, callback) =>{
             ReviewBoards.create({

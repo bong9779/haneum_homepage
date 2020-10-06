@@ -5,7 +5,7 @@ import medq from '../image/medq.png';
 import medwater from '../image/medwater.png';
 
 import './main.css';
-import { Navbar, Nav, Form, FormControl, Button, Dropdown, CarouselProps, CarouselItem, Carousel, Jumbotron} from 'react-bootstrap';
+import { Tooltip,OverlayTrigger, Navbar, Nav, Form, FormControl, Button, Dropdown, CarouselProps, CarouselItem, Carousel, Jumbotron} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 class home extends Component {
   constructor(props) {
@@ -13,7 +13,11 @@ class home extends Component {
   }
 
   render() {//메인화면 이미지 출력
-
+    const renderTooltip = (props) => (
+      <Tooltip id="button-tooltip" {...props}>
+         ☎  010-9019-5810
+      </Tooltip>
+    );
     return (
       <div>
 
@@ -55,7 +59,13 @@ class home extends Component {
   본 홈페이지는 올바른 약 복용을 장려합니다.
 </p>
 <p>
-  <Button variant="info">관리자 문의하기</Button>
+<OverlayTrigger
+    placement="right"
+    delay={{ show: 250, hide: 400 }}
+    overlay={renderTooltip}
+  >
+    <Button variant="info">관리자 문의하기</Button>
+  </OverlayTrigger>,
 </p>
 </Jumbotron>
 </div>

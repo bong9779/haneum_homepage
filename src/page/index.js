@@ -10,3 +10,8 @@ export { default as Search } from './search';
 export { default as SearchPatient } from './searchpatient';
 export { default as SearchBoard } from './searchboard';
 export { default as ReviewBoard } from './reviewboard';
+export { default as Purchase } from './purchase';
+export { default as Recommend } from './recommend';
+export { default as Recommendwrite } from './recommendwrite';
+export { default as Medcheck } from './medcheck';
+export { default as Viewrecommend } from './viewrecommend';

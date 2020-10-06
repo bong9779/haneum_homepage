@@ -27,6 +27,7 @@ class header extends Component {
     if(sessionStorage.login) {
       this.setState({ login : true })
     }
+    
   }
   _selectUserData = async (e) => { const id = this.state.id.trim();
     const password = this.state.password.trim();
@@ -93,6 +94,8 @@ class header extends Component {
   }
 
   render() {
+    const url = '/'+this.state.loginid;
+    const { admin, user_ip } = this.props;
     console.log('아이디: ' + this.state.id + ' 비밀번호: '+this.state.password);
 
     return (
@@ -108,7 +111,9 @@ class header extends Component {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item>제품 구매</Dropdown.Item>
+            {this.state.login ?
+              <Dropdown.Item href='/purchase'>제품 구매</Dropdown.Item>:
+              <Dropdown.Item> 제품 구매</Dropdown.Item>}
               {this.state.login ?
               <Dropdown.Item href='/reviewboard'>제품 후기</Dropdown.Item>:
               <Dropdown.Item> 제품 후기</Dropdown.Item>}
@@ -121,26 +126,12 @@ class header extends Component {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item>영양제 추천</Dropdown.Item>
-              <Dropdown.Item>건강 계산기</Dropdown.Item>
+              <Dropdown.Item href='/recommend'>영양제 추천</Dropdown.Item>
+              <Dropdown.Item href='/medcheck'>비타민 권장량 확인</Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
 
-            <Dropdown>
-            <Dropdown.Toggle variant="info" id="dropdown-basic">
-            MY PAGE
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-            {this.state.login ?
-                  <Dropdown.Item>마이페이지</Dropdown.Item>
-                : <Dropdown.Item>마이페이지</Dropdown.Item>}
-            {this.state.login ?
-                  <Dropdown.Item>관리자 문의</Dropdown.Item>
-                : <Dropdown.Item>관리자 문의</Dropdown.Item>}
-            </Dropdown.Menu>
-            </Dropdown>
-                    
+            
                 </Nav>
                 <div className='acenter_login'> 
                   {this.state.login ? <Button variant="info" href='/'><h6 onClick={() => this._logout()}>LOGOUT</h6></Button>
